@@ -1,0 +1,118 @@
+// Interpolation
+$r: "red";
+$s: "solid";
+$b: "border";
+
+// Variables
+$color-primary: cyan;
+$color-secondary: grey;
+$color-tertiary: royalblue;
+
+$font-lg: 40px;
+$font-md: 30px;
+$font-sm: 20px;
+
+$margin-lg: null;
+
+// Map
+$fonts: (
+  arial: Arial,
+  helvetica: Helvetica
+);
+
+$borders: (
+  1: solid,
+  2: dashed,
+  3: double,
+  4: dotted
+);
+
+// List
+$colors: red green blue pink;
+
+.nav {
+  background-color: transparentize($color-primary, .5);
+}
+
+// For Loop
+@for $i from 1 through 4 {
+  .list-item-#{$i} {
+    #{$b}: 1px map-get($borders, $i) green;
+  };
+};
+
+// Each Loop
+@each $color in $colors {
+  .list-item-#{"" + $color} {
+    background-color: $color;
+  }
+}
+
+// Mixins
+@mixin headerStyles($fontSize: $font-sm /*default parameter*/) {
+  $text-center: center; // block scope
+  color: $color-secondary;
+  text-align: $text-center;
+  margin-bottom: $margin-lg;
+
+  // If
+  @if ($fontSize == $font-lg) {
+    font-size: $fontSize;
+  } @else if ($fontSize == $font-md) {
+    font-size: doubleFontSize($font-md);
+  } @else {
+    font-size: doubleFontSize(doubleFontSize($fontSize));
+  }
+}
+
+@mixin transition($params... /*rest parameters*/) {
+  transition: $params;
+}
+
+// Functions
+@function doubleFontSize($fontSize: 12px) {
+  @return $fontSize * 2;
+}
+
+// Nesting
+.banner {
+  h1 {
+    $margin-lg: 4rem !global; // global scope
+    @include headerStyles($font-lg);
+    font-family: map-get($fonts, helvetica);
+    #{$b}: 1px #{$s} #{$r}
+  }
+
+  h2 {
+    @include headerStyles()
+  }
+
+  p {
+    @extend %paragraphs
+  }
+};
+
+// Placeholder Selector
+%paragraphs {
+  margin-bottom: 0;
+  line-height: 1rem;
+  word-spacing: 1rem;
+}
+
+.footer {
+  h3 {
+    @include headerStyles($font-md);
+    @include transition(color .25s, background-color 5s);
+
+    &:hover {
+      color: darken($color-tertiary, 20%); // Native functions
+      background-color: lighten($color-primary, 10%); // Native functions
+    }
+  }
+
+  p {
+    @extend %paragraphs;
+    font-size: doubleFontSize(24px);
+    color: mix(red, pink,)
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "SASS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass-watcher": "sass -w ./$npm_config_project/sass/index.scss ./$npm_config_project/css/index.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
